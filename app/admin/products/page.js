@@ -12,11 +12,6 @@ const Page = () => {
   const [CustomerSemester, setCustomerSemester] = useState("1")
 
 
-
-  const searchQueryLowercase = searchQuery.toLowerCase();
-
-
-
   useEffect(() => {
     auth();
     setLoading(true)
@@ -89,7 +84,7 @@ const Page = () => {
   return (
     <>
       <div class="p-4 mx-auto container mt-5">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-screen">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-screen ">
 
           <div class=" mt-14  pb-4">
             <form>
@@ -141,7 +136,7 @@ const Page = () => {
           <div className="flex justify-center items-center flex-wrap flex-col md:flex-row">
 
 
-            <label for="status" class=" text-sm font-medium text-gray-900">Your Branch :{" "}</label>
+            <label for="status" class=" text-sm font-medium text-gray-900"> Branch :{" "}</label>
             <select value={CustomerBranch} onChange={(e) => { setCustomerBranch(e.target.value); getNotes(e.target.value, CustomerSemester) }} name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" required>
               <option value="CSE">Computer Science & Engineering</option>
               <option value="IT">Information Technology</option>
@@ -165,9 +160,8 @@ const Page = () => {
             </select>
           </div>
 
-          <div>
-          </div>
-          {Products.map((product) => (
+          <div className="mt-5">
+          {Products && Array.isArray(Products) && Products.map((product)=> (
             <div key={product._id} className="product">
 
               <div class="max-w md:mx-10 p-6 bg-white flex justify-between items-center border border-gray-200 rounded-lg shadow mt-2">
@@ -189,7 +183,8 @@ const Page = () => {
             </div>
 
 
-          ))}
+))}
+</div>
 
           {!Loading ? "" : (
             <div role="status" className="flex justify-center">
