@@ -36,7 +36,7 @@ const handler = async (req, res) => {
   } else if (req.method === "GET") {
     try {
       const cookies = parse(req.headers.cookie || "");
-      const token = cookies.admin_access_token;
+      const token = cookies.user_access_token;
       let decoded = await jwt.verify(token, process.env.TOKEN_ADMIN);
       if (!decoded._id == process.env.ADMIN_PASSWORD) {
         return res
