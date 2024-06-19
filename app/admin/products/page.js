@@ -8,31 +8,25 @@ const Page = () => {
   const [Products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [Loading, setLoading] = useState(true)
-const [CustomerBranch, setCustomerBranch] = useState("")
-const [CustomerSemester, setCustomerSemester] = useState("")
+  const [CustomerBranch, setCustomerBranch] = useState("CSE")
+  const [CustomerSemester, setCustomerSemester] = useState("1")
 
 
 
   const searchQueryLowercase = searchQuery.toLowerCase();
 
-  // Filter Products based on the case-insensitive search query
-  const filteredProducts = Products.filter(
-    (card) =>
-      card.ProductName.toLowerCase().includes(searchQueryLowercase) ||
-      card.ProductPrice.toLowerCase().includes(searchQueryLowercase) ||
-      card.ProductID.toLowerCase().includes(searchQueryLowercase) ||
-      card.ProductStock.toLowerCase().includes(searchQueryLowercase)
-  );
-  
+
+
   useEffect(() => {
-   auth();
+    auth();
     setLoading(true)
+    getNotes(CustomerBranch, CustomerSemester)
     fetch("/api/getProduct")
       .then((response) => response.json())
       .then((data) => {
         setLoading(false)
         if (data.success) {
-          setProducts(data.products);
+          setProducts(data.Product);
         } else {
           console.error("API request failed");
         }
@@ -42,17 +36,16 @@ const [CustomerSemester, setCustomerSemester] = useState("")
       });
   }, []);
 
-  async function deleteMe(productid) {
-    const fetch_api = await fetch("/api/delete/", {
+  async function getNotes(branch, semester) {
+    const fetch_api = await fetch("/api/getProduct", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({deltype : "products", id: productid})
+      body: JSON.stringify({ branch: branch, semester: semester })
     });
 
     const data = await fetch_api.json();
-    if (data.success) {
-      location.reload();
-    }
+    console.log(data);
+    setProducts(data.Product);
   };
 
 
@@ -77,7 +70,7 @@ const [CustomerSemester, setCustomerSemester] = useState("")
     const csv = Papa.unparse(filteredData);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
-  
+
     if (link.download !== undefined) {
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
@@ -89,10 +82,10 @@ const [CustomerSemester, setCustomerSemester] = useState("")
       alert('Your browser does not support downloading files.');
     }
   };
-  
-function report(){
-  exportToCSV(Products);
-}
+
+  function report() {
+    exportToCSV(Products);
+  }
   return (
     <>
       <div class="p-4 mx-auto container mt-5">
@@ -132,7 +125,7 @@ function report(){
                   }}
                   id="default-search"
                   class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  placeholder="Search Mockups, Logos..."
+                  placeholder="Search Subject..."
                   required
                 />
                 <button
@@ -145,33 +138,58 @@ function report(){
             </form>
           </div>
           {/* <a href="products/add" type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">New Product</a> */}
+          <div className="flex justify-center items-center flex-wrap flex-col md:flex-row">
 
 
-          <label for="status" class=" mb-2 text-sm font-medium text-gray-900">Your Branch :</label>
-          <select value={CustomerBranch} onChange={(e) => setCustomerBranch(e.target.value)} name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" required>
-            <option value="CSE">Computer Science & Engineering</option>
-            <option value="IT">Information Technology</option>
-            <option value="ECE">Electronics Engineering</option>
-            <option value="EC">Electrical Engineering</option>
-            <option value="MECH">Mechanical Engineering</option>
-            <option value="CIVIL">Civil Engineering</option>
-          </select>
-
-
-
-          <label for="status" class=" mb-2 text-sm font-medium text-gray-900">Semester :</label>
-          <select value={CustomerSemester} onChange={(e) => setCustomerSemester(e.target.value)} name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" required>
-            <option value="1">1st Semester</option>
-            <option value="2">2nd Semester</option>
-            <option value="3">3rd Semester</option>
-            <option value="4">4th Semester</option>
-            <option value="5">5th Semester</option>
-            <option value="6">6th Semester</option>
-        
-          </select>
+            <label for="status" class=" text-sm font-medium text-gray-900">Your Branch :{" "}</label>
+            <select value={CustomerBranch} onChange={(e) => { setCustomerBranch(e.target.value); getNotes(e.target.value, CustomerSemester) }} name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" required>
+              <option value="CSE">Computer Science & Engineering</option>
+              <option value="IT">Information Technology</option>
+              <option value="ECE">Electronics Engineering</option>
+              <option value="EC">Electrical Engineering</option>
+              <option value="MECH">Mechanical Engineering</option>
+              <option value="CIVIL">Civil Engineering</option>
+            </select>
 
 
 
+            <label for="status" class="sm:ms-6 sm:mt-0 mt-5 text-sm font-medium text-gray-900">Semester :{" "}</label>
+            <select value={CustomerSemester} onChange={(e) => { setCustomerSemester(e.target.value); getNotes(CustomerBranch, e.target.value) }} name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" required>
+              <option value="1">1st Semester</option>
+              <option value="2">2nd Semester</option>
+              <option value="3">3rd Semester</option>
+              <option value="4">4th Semester</option>
+              <option value="5">5th Semester</option>
+              <option value="6">6th Semester</option>
+
+            </select>
+          </div>
+
+          <div>
+          </div>
+          {Products.map((product) => (
+            <div key={product._id} className="product">
+
+              <div class="max-w md:mx-10 p-6 bg-white flex justify-between items-center border border-gray-200 rounded-lg shadow mt-2">
+                <div>
+                  <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{product.ProductName}</h5>
+                  </a>
+                  <p class="mb-3 font-normal text-gray-700 ">{product.ProductBranch},Semester:{product.ProductSemester}  </p>
+                </div>
+                <div>
+                  <a href={product.ProductLink} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                    Download
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+
+          ))}
 
           {!Loading ? "" : (
             <div role="status" className="flex justify-center">

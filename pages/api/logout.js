@@ -3,7 +3,7 @@ import { serialize } from 'cookie';
 const handler = async (req, res) => {
   if (req.method === 'GET') {
     try {
-      res.setHeader('Set-Cookie', serialize('admin_access_token', '', {
+      res.setHeader('Set-Cookie', serialize('user_access_token', '', {
         httpOnly: true,
         sameSite: 'strict',
         expires: new Date(0),

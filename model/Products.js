@@ -5,9 +5,9 @@ const ProductSchema = new mongoose.Schema(
   {
     ProductID: { type: String, required: true, unique: true },
     ProductName: { type: String },
-    ProductPrice: { type: String },
-    ProductStock: { type: String },
-    ProductHSN: { type: String },
+    ProductBranch: { type: String },
+    ProductSemester: { type: String },
+    ProductLink: { type: String },
   },
   { collection: "all-Products" },
   { timestamps: true }

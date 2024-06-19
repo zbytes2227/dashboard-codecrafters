@@ -48,7 +48,7 @@ const handler = async (req, res) => {
         Password: hashedPassword
       });
 
-      await newCard.save();
+     let new_student = await newCard.save();
 
       const fetch_api = await fetch("https://script.google.com/macros/s/AKfycbwy0HfRtY6VF9Xmkby60OJyJAqi_7HIn7T_IssuRua1N1iJAnVBukYO94t-74NMhViVFg/exec", {
         method: "POST",
@@ -61,7 +61,9 @@ const handler = async (req, res) => {
       });
       const datas = await fetch_api;
       console.log("okay");
-      const token = jwt.sign({ _id: process.env.ADMIN_USERNAME }, process.env.TOKEN_ADMIN, { expiresIn: "48h" });
+      console.log(new_student._id);
+      console.log("okay");
+      const token = jwt.sign({ _id: new_student._id }, process.env.TOKEN_ADMIN, { expiresIn: "48h" });
       return res.setHeader('Set-Cookie', serialize('user_access_token', token, {
         httpOnly: true,
         sameSite: "strict",
