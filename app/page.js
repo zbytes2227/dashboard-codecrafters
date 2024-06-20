@@ -71,9 +71,9 @@ export default function Home() {
             <p class="font-extrabold text-3xl text-gray-700 ">{Dashboard.Customers}</p>
           </a>
 
-          <a href="/admin/products" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mx-2">
+          <a href="/admin/upadtes" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mx-2">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">ALL UPDATES & JOBS</h5>
-            <p class="font-extrabold text-3xl text-gray-700 ">{Dashboard.Customers}</p>
+            <p class="font-extrabold text-3xl text-gray-700 ">{Dashboard.Updates}</p>
           </a>
 
         </div>
