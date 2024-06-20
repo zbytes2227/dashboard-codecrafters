@@ -18,7 +18,8 @@ const handler = async (req, res) => {
       }
 
         let decodedx = {
-          id: user.CustomerID
+          id: user.CustomerID,
+          branch: user.CustomerBranch
         };
         return res.status(200).json({ success: true, msg: "send", user_details: decodedx });
       

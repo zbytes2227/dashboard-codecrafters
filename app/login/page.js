@@ -28,9 +28,9 @@ function loginUser(){
       }).then((response) => response.json())
         .then((data) => {
           setmsg(data.msg)
+          setLoading(false)
           if (data.success) {
             console.log(data);
-            setLoading(false)
             router.push("/");
           } else {
             console.error("API request failed");
@@ -129,7 +129,7 @@ async function auth() {
                 Loading && "bg-indigo-200"
               } `}
             >
-              Sign in{" "}
+                {Loading ? 'Please Wait':"Sign in" }
             </button>
             
           </div>

@@ -16,11 +16,13 @@ const Page = () => {
   const [CustomerPassword, setCustomerPassword] = useState("")
   const [CustomerEmail, setCustomerEmail] = useState("");
   const [msg, setmsg] = useState("")
+  const [Loading, setLoading] = useState(false)
 
 
 
   function addCustomer() {
     // Fetch data from the API
+    setLoading(true)
     const postData = {
       CustomerID: CustomerID,
       CustomerName: CustomerName,
@@ -41,6 +43,7 @@ const Page = () => {
     }).then((response) => response.json())
       .then((data) => {
         setmsg(data.msg)
+        setLoading(false)
         if (data.success) {
           console.log(data.customer);
           setCustomerName(data.customer.CustomerName)
@@ -63,16 +66,16 @@ const Page = () => {
 
   return (
     <>
-        <div className="max-w-sm mx-auto mt-14 flex justify-around">
+      <div className="max-w-sm mx-auto mt-14 flex justify-around">
         <a href="/login" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg mt-4 text-sm  sm:w-auto px-5 py-2.5 text-center"
         >Login</a>
-        <a href="/register" 
+        <a href="/register"
           class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg mt-4 text-sm  sm:w-auto px-5 py-2.5 text-center"
-          >Register</a>
-          </div>
-  
+        >Register</a>
+      </div>
+
       <div class="max-w-sm mt-5 mx-auto border border-3 rounded-lg p-5">
-      <h2 className="mb-5 text-2xl font-bold text-center">
+        <h2 className="mb-5 text-2xl font-bold text-center">
           Student Registration
         </h2>
         {!msg ? ("") : (<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
@@ -146,7 +149,7 @@ const Page = () => {
             for="CustomerPassword"
             class="block mb-2 text-sm font-medium text-gray-900"
           >
-           Password
+            Password
           </label>
           <input
             id="CustomerPassword"
@@ -157,7 +160,7 @@ const Page = () => {
             required
           />
         </div>
-        
+
 
 
         <div class="mb-5">
@@ -201,7 +204,7 @@ const Page = () => {
           onClick={addCustomer}
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg mt-4 text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         >
-          Save
+          {Loading ? 'Please Wait' : "Register"}
         </button>
       </div>
     </>

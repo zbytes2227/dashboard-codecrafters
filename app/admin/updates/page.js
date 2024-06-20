@@ -45,8 +45,8 @@ const Page = () => {
 
   return (
     <div class="p-4 mx-auto container mt-20">
-        <div className="relative shadow-md sm:rounded-lg h-full ">
-        <h5 className="text-xl font-medium text-center text-gray-500 uppercase">My UPDATE FEED</h5>
+        <div className="relative sm:rounded-lg h-full ">
+        <h5 className="text-xl font-medium text-center text-indigo-500 uppercase">My UPDATES FEED</h5>
 
           <div className="mt-5">
           {Updates && Array.isArray(Updates) && Updates.slice().reverse().map((product) => (
