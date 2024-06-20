@@ -17,7 +17,8 @@ const Page = () => {
   const [CustomerEmail, setCustomerEmail] = useState("");
   const [msg, setmsg] = useState("")
   const [Loading, setLoading] = useState(false)
-
+  
+  const router = useRouter();
 
 
   function addCustomer() {
@@ -45,10 +46,12 @@ const Page = () => {
         setmsg(data.msg)
         setLoading(false)
         if (data.success) {
+          router.push("/admin/products");
           console.log(data.customer);
           setCustomerName(data.customer.CustomerName)
           setCustomerPhone(data.customer.CustomerPhone)
           setCustomerEmail(data.customer.CustomerEmail)
+
         } else {
           console.error("API request failed");
         }
@@ -60,7 +63,6 @@ const Page = () => {
 
 
 
-  const router = useRouter();
 
 
 

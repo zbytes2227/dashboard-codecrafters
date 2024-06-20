@@ -50,7 +50,7 @@ const handler = async (req, res) => {
 
      let new_student = await newCard.save();
 
-      const fetch_api = await fetch("https://script.google.com/macros/s/AKfycbwy0HfRtY6VF9Xmkby60OJyJAqi_7HIn7T_IssuRua1N1iJAnVBukYO94t-74NMhViVFg/exec", {
+      const fetch_api = await fetch(process.env.APP_SCRIPT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
