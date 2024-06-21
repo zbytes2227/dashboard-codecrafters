@@ -20,7 +20,7 @@ const handler = async (req, res) => {
                 return res.status(401).json({ success: false, msg: "Login failed. Please check your password." });
             }
 
-            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_ADMIN, { expiresIn: "20d" });
+            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_ADMIN, { expiresIn: "10d" });
             return res.setHeader('Set-Cookie', serialize('user_access_token', token, {
                 httpOnly: true,
                 sameSite: "strict",

@@ -312,7 +312,7 @@ const Navbar = () => {
                     </p>
                   </div>
                   <ul class="py-1" role="none">
-                  
+{/*                   
                     <li>
                       <a
                         onClick={handleLogout}
@@ -321,7 +321,7 @@ const Navbar = () => {
                       >
                         Sign out
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                   </div>
                   </div>
