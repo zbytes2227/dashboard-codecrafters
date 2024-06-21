@@ -63,7 +63,7 @@ const handler = async (req, res) => {
       console.log("okay");
       console.log(new_student._id);
       console.log("okay");
-      const token = jwt.sign({ _id: new_student._id }, process.env.TOKEN_ADMIN, { expiresIn: "48h" });
+      const token = jwt.sign({ _id: new_student._id }, process.env.TOKEN_ADMIN, { expiresIn: "20d" });
       return res.setHeader('Set-Cookie', serialize('user_access_token', token, {
         httpOnly: true,
         sameSite: "strict",
