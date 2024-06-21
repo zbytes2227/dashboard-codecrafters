@@ -87,7 +87,7 @@ const Page = () => {
     <>
       <div className="mt-20">
         <h2 className="mb-5 text-2xl font-bold text-center">
-          Edit Customer Details
+          Edit Student Details
         </h2>
       </div>
       <div class="max-w-sm mx-auto border border-3 rounded-lg p-5">
